@@ -51,7 +51,7 @@ const decoders = [
   // "aac",
   // "av1",
   // "flac",
-  // "h264",
+  "h264",
   // "hevc",
   // "libvpx_vp8",
   // "libvpx_vp9",
@@ -92,7 +92,7 @@ const decoders = [
   // "hls",
   // "m4a",
   // "rawvideo",
-  process.platform === "darwin" ? "h264_videotoolbox" : "h264",
+  // process.platform === "darwin" ? "h264_videotoolbox" : null,
   // process.platform === "darwin" ? "hevc_videotoolbox" : null,
   "bmp",
   "jpeg2000",
@@ -153,10 +153,8 @@ const isMusl = process.argv[2] === "musl";
 // await enableFdkAac(isWindows);
 // enableAv1(isWindows);
 // enableZimg(isWindows);
-if (process.platform !== "darwin") {
-  enableVpx(isWindows);
-  enableX264(isMusl, isWindows);
-}
+enableVpx(isWindows);
+enableX264(isMusl, isWindows);
 // enableX265(isMusl, isWindows);
 // enableLibMp3Lame(isWindows);
 // enableOpus(isWindows);
@@ -202,7 +200,7 @@ const extraCFlags = [
   "-I" + PREFIX + "/include",
   // "-I" + PREFIX + "/include/opus",
   // "-I" + PREFIX + "/include/lame",
-  process.platform === "darwin" ? null : "-I" + PREFIX + "/include/vpx",
+  "-I" + PREFIX + "/include/vpx",
 ].filter(Boolean);
 
 const extraLdFlags = [
@@ -284,9 +282,9 @@ execSync(
     // "--enable-encoder=pcm_s16le",
     // "--enable-encoder=libx264",
     // "--enable-encoder=libx265",
-    // "--enable-libvpx",
+    "--enable-libvpx",
     // "--enable-encoder=libvpx_vp8",
-    // "--enable-encoder=libvpx_vp9",
+    "--enable-encoder=libvpx_vp9",
     // "--enable-encoder=gif",
     // "--enable-encoder=mpegts",
     // "--enable-encoder=libmp3lame",
@@ -294,15 +292,15 @@ execSync(
     // "--enable-encoder=prores_ks",
     // "--enable-encoder=rawvideo",
     // "--enable-encoder=null",
-    `--enable-${process.platform === "darwin" ? "videotoolbox" : "libvpx"}`,
-    `--enable-encoder=${process.platform === "darwin" ? "h264_videotoolbox" : "libvpx_vp9"}`,
+    // process.platform === "darwin" ? "--enable-videotoolbox" : null,
+    // process.platform === "darwin" ? "--enable-encoder=h264_videotoolbox" : null,
     // process.platform === "darwin" ? "--enable-encoder=hevc_videotoolbox" : null,
     // process.platform === "darwin"
     //   ? "--enable-encoder=prores_videotoolbox"
     //   : null,
     "--disable-muxers",
     // "--enable-muxer=webm,opus,mp4,wav,mp3,mov,matroska,hevc,h264,gif,image2,image2pipe,adts,m4a,mpegts,null,avi",
-    `--enable-muxer=${process.platform === "darwin" ? "mov" : "webm"}`,
+    "--enable-muxer=webm",
     // "--enable-libx264",
     // "--enable-libx265",
     // "--enable-libmp3lame",
