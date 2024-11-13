@@ -14,6 +14,15 @@ import { enableZimg } from "./compile-zimg.mjs";
 import { fixLinuxLinks } from "./fix-linux-links.mjs";
 
 /*
+We forked the original https://github.com/remotion-dev/rust-ffmpeg-splitter repository and stripped FFmpeg even further.
+This script compiles ffmpeg with the minimal set of the following features:
+- demuxers: h264, image2, mov
+- decoders: h264, png, bmp, jpeg2000, jpegxl, jpegls, svg, webp
+- encoders: libvpx_vp9
+- muxers: webm
+- filters: scale, split, alphamerge, format, geq, overlay, pad
+We use libvpx_vp9 video encoder, since X264 is GPL and we can't distribute it until simulator-server gets open sourced.
+
 -- Before first use --
 
 You may need to install the following dependencies (don't assume the list is complete):
@@ -51,6 +60,7 @@ const decoders = [
   // "aac",
   // "av1",
   // "flac",
+  // To decode the video stream of input recording
   "h264",
   // "hevc",
   // "libvpx_vp8",
@@ -87,6 +97,7 @@ const decoders = [
   // "vp9",
   // "mjpeg",
   // "gif",
+  // To decode device mask / background
   "png",
   // "libdav1d",
   // "hls",
@@ -94,11 +105,13 @@ const decoders = [
   // "rawvideo",
   // process.platform === "darwin" ? "h264_videotoolbox" : null,
   // process.platform === "darwin" ? "hevc_videotoolbox" : null,
+  // All of these are to decode background images
   "bmp",
   "jpeg2000",
   "jpegxl",
   "jpegls",
   "svg",
+  // To decode device frame / background
   "webp",
 ].filter(Boolean);
 
@@ -110,11 +123,14 @@ const demuxers = [
   // "concat",
   // "flac",
   // "flv",
+  // To demux the video stream of input recording
   "h264",
   // "hevc",
+  // To demux image containing a device mask / background
   "image2",
   // "image2pipe",
   // "matroska",
+  // To demux the container of input recording
   "mov",
   // "mp3",
   // "ogg",
@@ -153,7 +169,9 @@ const isMusl = process.argv[2] === "musl";
 // await enableFdkAac(isWindows);
 // enableAv1(isWindows);
 // enableZimg(isWindows);
+// We need only libvpx for encoding the postprocessed video
 enableVpx(isWindows);
+// X264 is only for decoding (the encoder is GPL)
 enableX264(isMusl, isWindows);
 // enableX265(isMusl, isWindows);
 // enableLibMp3Lame(isWindows);
