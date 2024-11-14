@@ -223,6 +223,7 @@ const extraCFlags = [
 
 const extraLdFlags = [
   "-L" + PREFIX + "/lib",
+  isWindows ? "-static" : null,
   process.platform === "darwin" && process.arch === "arm64" ? "-Wl" : null,
 ].filter(Boolean);
 
