@@ -6,8 +6,9 @@ export const fixLinuxLinks = () => {
     cwd: "ffmpeg/" + PREFIX + "/bin",
     stdio: "inherit",
   });
-  execSync(`patchelf --force-rpath --set-rpath '$ORIGIN' ./ffprobe`, {
-    cwd: "ffmpeg/" + PREFIX + "/bin",
-    stdio: "inherit",
-  });
+  // Disabled, as we don't include ffprobe
+  // execSync(`patchelf --force-rpath --set-rpath '$ORIGIN' ./ffprobe`, {
+  //   cwd: "ffmpeg/" + PREFIX + "/bin",
+  //   stdio: "inherit",
+  // });
 };
