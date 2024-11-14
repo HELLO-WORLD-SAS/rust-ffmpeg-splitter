@@ -19,7 +19,7 @@ This script compiles ffmpeg with the minimal set of the following features:
 - demuxers: h264, image2, mov
 - decoders: h264, png, bmp, jpeg2000, jpegxl, jpegls, svg, webp
 - encoders: libvpx_vp9
-- muxers: webm
+- muxers: webm, mov
 - filters: scale, split, alphamerge, format, geq, overlay, pad
 We use libvpx_vp9 video encoder, since X264 is GPL and we can't distribute it until simulator-server gets open sourced.
 
@@ -318,7 +318,7 @@ execSync(
     //   : null,
     "--disable-muxers",
     // "--enable-muxer=webm,opus,mp4,wav,mp3,mov,matroska,hevc,h264,gif,image2,image2pipe,adts,m4a,mpegts,null,avi",
-    "--enable-muxer=webm",
+    "--enable-muxer=webm,mov",
     // "--enable-libx264",
     // "--enable-libx265",
     // "--enable-libmp3lame",
