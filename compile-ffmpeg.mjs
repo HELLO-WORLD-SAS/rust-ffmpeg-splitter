@@ -16,8 +16,8 @@ import { fixLinuxLinks } from "./fix-linux-links.mjs";
 /*
 We forked the original https://github.com/remotion-dev/rust-ffmpeg-splitter repository and stripped FFmpeg even further.
 This script compiles ffmpeg with the minimal set of the following features:
-- demuxers: h264, image2, mov
-- decoders: h264, png, bmp, jpeg2000, jpegxl, jpegls, svg, webp
+- demuxers: h264, image2, mov, gif
+- decoders: h264, png, bmp, jpeg2000, jpegxl, jpegls, webp, gif
 - encoders: libvpx_vp9
 - muxers: webm, mov
 - filters: scale, split, alphamerge, format, geq, overlay, pad
@@ -96,7 +96,6 @@ const decoders = [
   // "vorbis",
   // "vp9",
   // "mjpeg",
-  // "gif",
   // To decode device mask / background
   "png",
   // "libdav1d",
@@ -107,10 +106,10 @@ const decoders = [
   // process.platform === "darwin" ? "hevc_videotoolbox" : null,
   // All of these are to decode background images
   "bmp",
+  "gif",
   "jpeg2000",
   "jpegxl",
   "jpegls",
-  "svg",
   // To decode device frame / background
   "webp",
 ].filter(Boolean);
@@ -151,7 +150,7 @@ const demuxers = [
   // "pcm_u32be",
   // "pcm_u32le",
   // "wav",
-  // "gif",
+  "gif",
   // "hls",
   // "m4a",
   // "mpeg2_videotoolbox",
