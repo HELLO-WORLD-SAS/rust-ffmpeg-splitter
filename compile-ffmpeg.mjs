@@ -19,9 +19,9 @@ This script compiles ffmpeg with the minimal set of the following features:
 - demuxers: h264, image2, mov, gif
 - decoders: h264, png, bmp, jpeg2000, jpegxl, jpegls, webp, gif
 - encoders: libvpx_vp9
-- muxers: webm, mov
+- muxers: mp4
 - filters: scale, split, alphamerge, format, geq, overlay, pad
-We use libvpx_vp9 video encoder, since X264 is GPL and we can't distribute it until simulator-server gets open sourced.
+We use libvpx_vp9 video encoder, since libx264 is GPL and we can't distribute it until simulator-server gets open sourced.
 
 -- Before first use --
 
@@ -170,8 +170,7 @@ const isMusl = process.argv[2] === "musl";
 // enableZimg(isWindows);
 // We need only libvpx for encoding the postprocessed video
 enableVpx(isWindows);
-// X264 is only for decoding (the encoder is GPL)
-enableX264(isMusl, isWindows);
+// enableX264(isMusl, isWindows);
 // enableX265(isMusl, isWindows);
 // enableLibMp3Lame(isWindows);
 // enableOpus(isWindows);
@@ -318,7 +317,7 @@ execSync(
     //   : null,
     "--disable-muxers",
     // "--enable-muxer=webm,opus,mp4,wav,mp3,mov,matroska,hevc,h264,gif,image2,image2pipe,adts,m4a,mpegts,null,avi",
-    "--enable-muxer=webm,mov",
+    "--enable-muxer=mp4",
     // "--enable-libx264",
     // "--enable-libx265",
     // "--enable-libmp3lame",
