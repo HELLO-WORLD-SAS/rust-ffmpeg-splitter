@@ -20,7 +20,7 @@ This script compiles ffmpeg with the minimal set of the following features:
 - decoders: rawvideo libvpx_vp8
 - encoders: mjpeg
 - muxers: image2pipe
-- filters: -
+- filters: scale
 
 -- Before first use --
 
@@ -271,7 +271,7 @@ execSync(
     // "--enable-filter=fieldorder",
     // "--enable-filter=pan",
     // "--enable-filter=volume",
-    // "--enable-filter=scale",
+    "--enable-filter=scale",
     // "--enable-filter=sine",
     // "--enable-filter=split",
     // "--enable-filter=nullsrc",
