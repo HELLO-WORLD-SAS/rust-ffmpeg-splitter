@@ -58,6 +58,7 @@ if (existsSync("/opt/homebrew/opt/sdl2/lib/libSDL2-2.0.0.dylib")) {
 }
 const decoders = [
   // "aac",
+  // "ac3",
   // "av1",
   // "flac",
   // To decode the video stream of input recording
@@ -197,6 +198,9 @@ if (fs.existsSync("ffmpeg")) {
   execSync("git apply aac.patch --directory ffmpeg", {
     stdio: "inherit",
   });
+  execSync("git apply hevc_ps.patch --directory ffmpeg", {
+    stdio: "inherit",
+  });
 } else {
   execSync("git clone https://github.com/ffmpeg/ffmpeg.git", {
     stdio: "inherit",
@@ -206,6 +210,9 @@ if (fs.existsSync("ffmpeg")) {
     stdio: "inherit",
   });
   execSync("git apply aac.patch --directory ffmpeg", {
+    stdio: "inherit",
+  });
+  execSync("git apply hevc_ps.patch --directory ffmpeg", {
     stdio: "inherit",
   });
 }
