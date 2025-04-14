@@ -16,12 +16,11 @@ import { fixLinuxLinks } from "./fix-linux-links.mjs";
 /*
 We forked the original https://github.com/remotion-dev/rust-ffmpeg-splitter repository and stripped FFmpeg even further.
 This script compiles ffmpeg with the minimal set of the following features:
-- demuxers: h264, image2, mov, gif
-- decoders: h264, png, bmp, jpeg2000, jpegxl, jpegls, webp, gif
-- encoders: libvpx_vp9
-- muxers: mp4
-- filters: scale, split, alphamerge, format, geq, overlay, pad
-We use libvpx_vp9 video encoder, since libx264 is GPL and we can't distribute it until simulator-server gets open sourced.
+- demuxers: -
+- decoders: libvpx_vp8
+- encoders: mjpeg
+- muxers: -
+- filters: -
 
 -- Before first use --
 
@@ -61,10 +60,9 @@ const decoders = [
   // "ac3",
   // "av1",
   // "flac",
-  // To decode the video stream of input recording
-  "h264",
+  // "h264",
   // "hevc",
-  // "libvpx_vp8",
+  "libvpx_vp8",
   // "libvpx_vp9",
   // "vp8",
   // "vp9",
@@ -97,22 +95,19 @@ const decoders = [
   // "vorbis",
   // "vp9",
   // "mjpeg",
-  // To decode device mask / background
-  "png",
+  // "png",
   // "libdav1d",
   // "hls",
   // "m4a",
   // "rawvideo",
   // process.platform === "darwin" ? "h264_videotoolbox" : null,
   // process.platform === "darwin" ? "hevc_videotoolbox" : null,
-  // All of these are to decode background images
-  "bmp",
-  "gif",
-  "jpeg2000",
-  "jpegxl",
-  "jpegls",
-  // To decode device frame / background
-  "webp",
+  // "bmp",
+  // "gif",
+  // "jpeg2000",
+  // "jpegxl",
+  // "jpegls",
+  // "webp",
 ].filter(Boolean);
 
 const demuxers = [
@@ -123,15 +118,12 @@ const demuxers = [
   // "concat",
   // "flac",
   // "flv",
-  // To demux the video stream of input recording
-  "h264",
+  // "h264",
   // "hevc",
-  // To demux image containing a device mask / background
-  "image2",
+  // "image2",
   // "image2pipe",
   // "matroska",
-  // To demux the container of input recording
-  "mov",
+  // "mov",
   // "mp3",
   // "ogg",
   // "pcm_f32le",
@@ -151,7 +143,7 @@ const demuxers = [
   // "pcm_u32be",
   // "pcm_u32le",
   // "wav",
-  "gif",
+  // "gif",
   // "hls",
   // "m4a",
   // "mpeg2_videotoolbox",
@@ -169,7 +161,6 @@ const isMusl = process.argv[2] === "musl";
 // await enableFdkAac(isWindows);
 // enableAv1(isWindows);
 // enableZimg(isWindows);
-// We need only libvpx for encoding the postprocessed video
 enableVpx(isWindows);
 // enableX264(isMusl, isWindows);
 // enableX265(isMusl, isWindows);
@@ -279,9 +270,9 @@ execSync(
     // "--enable-filter=fieldorder",
     // "--enable-filter=pan",
     // "--enable-filter=volume",
-    "--enable-filter=scale",
+    // "--enable-filter=scale",
     // "--enable-filter=sine",
-    "--enable-filter=split",
+    // "--enable-filter=split",
     // "--enable-filter=nullsrc",
     // "--enable-filter=silencedetect",
     // "--enable-filter=palettegen",
@@ -289,11 +280,11 @@ execSync(
     // "--enable-filter=zscale",
     // "--enable-filter=tonemap",
     // "--enable-filter=copy",
-    "--enable-filter=alphamerge",
-    "--enable-filter=format",
-    "--enable-filter=geq",
-    "--enable-filter=overlay",
-    "--enable-filter=pad",
+    // "--enable-filter=alphamerge",
+    // "--enable-filter=format",
+    // "--enable-filter=geq",
+    // "--enable-filter=overlay",
+    // "--enable-filter=pad",
     "--disable-doc",
     // "--enable-gpl",
     // "--enable-nonfree",
@@ -302,13 +293,13 @@ execSync(
     // "--enable-encoder=aac",
     // "--enable-encoder=libfdk_aac",
     // "--enable-encoder=png",
-    // "--enable-encoder=mjpeg",
+    "--enable-encoder=mjpeg",
     // "--enable-encoder=pcm_s16le",
     // "--enable-encoder=libx264",
     // "--enable-encoder=libx265",
     "--enable-libvpx",
     // "--enable-encoder=libvpx_vp8",
-    "--enable-encoder=libvpx_vp9",
+    // "--enable-encoder=libvpx_vp9",
     // "--enable-encoder=gif",
     // "--enable-encoder=mpegts",
     // "--enable-encoder=libmp3lame",
@@ -324,7 +315,6 @@ execSync(
     //   : null,
     "--disable-muxers",
     // "--enable-muxer=webm,opus,mp4,wav,mp3,mov,matroska,hevc,h264,gif,image2,image2pipe,adts,m4a,mpegts,null,avi",
-    "--enable-muxer=mp4",
     // "--enable-libx264",
     // "--enable-libx265",
     // "--enable-libmp3lame",
