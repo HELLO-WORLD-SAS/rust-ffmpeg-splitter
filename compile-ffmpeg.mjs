@@ -19,7 +19,7 @@ This script compiles ffmpeg with the minimal set of the following features:
 - demuxers: -
 - decoders: rawvideo libvpx_vp8
 - encoders: mjpeg
-- muxers: -
+- muxers: image2pipe
 - filters: -
 
 -- Before first use --
@@ -315,6 +315,7 @@ execSync(
     //   : null,
     "--disable-muxers",
     // "--enable-muxer=webm,opus,mp4,wav,mp3,mov,matroska,hevc,h264,gif,image2,image2pipe,adts,m4a,mpegts,null,avi",
+    "--enable-muxer=image2pipe",
     // "--enable-libx264",
     // "--enable-libx265",
     // "--enable-libmp3lame",
