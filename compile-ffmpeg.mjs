@@ -17,7 +17,7 @@ import { fixLinuxLinks } from "./fix-linux-links.mjs";
 We forked the original https://github.com/remotion-dev/rust-ffmpeg-splitter repository and stripped FFmpeg even further.
 This script compiles ffmpeg with the minimal set of the following features:
 - demuxers: -
-- decoders: libvpx_vp8
+- decoders: rawvideo libvpx_vp8
 - encoders: mjpeg
 - muxers: -
 - filters: -
@@ -99,7 +99,7 @@ const decoders = [
   // "libdav1d",
   // "hls",
   // "m4a",
-  // "rawvideo",
+  "rawvideo",
   // process.platform === "darwin" ? "h264_videotoolbox" : null,
   // process.platform === "darwin" ? "hevc_videotoolbox" : null,
   // "bmp",
