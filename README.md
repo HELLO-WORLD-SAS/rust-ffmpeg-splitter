@@ -1,5 +1,10 @@
 # Rust FFmpeg splitter
 
+> [!NOTE]
+> This repository is a fork used to build the FFmpeg binary with a minimal set of features and dependencies to minimize
+> the size of the binary and strip all the non-free/GPL components. For more information, see the
+> [./compile-ffmpeg.mjs](./compile-ffmpeg.mjs) file.
+
 The goal is to use this in Remotion to achieve the following:
 
 - Have the FFmpeg CLI
